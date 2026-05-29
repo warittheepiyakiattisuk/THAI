@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ไทยช่วยไทยพลัส 60/40</title>
+    <style>
+        :root {
+            --primary-color: #0b3c5d;
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #6c757d;
+            --green: #2e7d32;
+            --red: #c62828;
+            --blue: #1565c0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" opacity="0.03"><text x="200" y="150" font-family="sans-serif" font-size="28" font-weight="bold" fill="%230b3c5d" text-anchor="middle" dominant-baseline="middle" transform="rotate(-25 200 150)">ไทยช่วยไทย พลัส</text></svg>');
+            background-repeat: repeat;
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Header */
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: var(--primary-color);
+            margin: 0 0 5px 0;
+            font-size: 1.6rem;
+        }
+        .subtitle {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Cards */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #eef2f5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .card-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .card-value {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        select {
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            background-color: #fff;
+            color: var(--text-main);
+            outline: none;
+            flex-grow: 1;
+            max-width: 250px;
+        }
+        .btn-clear {
+            background-color: #fff;
+            color: var(--red);
+            border: 1px solid var(--red);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-clear:hover {
+            background-color: var(--red);
+            color: #fff;
+        }
+
+        /* Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        td {
+            border-bottom: 1px solid #eef2f5;
+            padding: 10px 6px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        /* Form Inputs */
+        input[type="text"], input[type="number"] {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 16px; /* ป้องกัน iOS auto-zoom */
+            box-sizing: border-box;
+        }
+        input[type="number"] { text-align: right; }
+        input:focus {
+            border-color: #a5b4fc;
+            outline: none;
+            background-color: #f8fafc;
+        }
+
+        /* Responsive Breakpoint (Smartphones) */
+        @media screen and (max-width: 600px) {
+            body { padding: 8px; }
+            .container { padding: 15px; border-radius: 12px; }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 15px;
+                text-align: left;
+            }
+            .card-title { margin-bottom: 0; }
+            .card-value { font-size: 1.15rem; }
+
+            .controls {
+                flex-direction: row;
+            }
+            select { max-width: none; }
+
+            /* แปลงตารางเป็นบล็อกการ์ด */
+            table, thead, tbody, th, td, tr { display: block; }
+            thead { display: none; } /* ซ่อนหัวตารางแบบเดิม */
+            
+            tr {
+                background: #fff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                margin-bottom: 12px;
+                padding: 8px 12px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                text-align: right;
+                padding: 6px 0;
+                border-bottom: 1px dashed #f1f5f9;
+            }
+            td:last-child { border-bottom: none; }
+            td:first-child { 
+                background: #f8fafc;
+                margin: -8px -12px 6px -12px;
+                padding: 6px 12px;
+                border-radius: 12px 12px 0 0;
+                font-weight: bold;
+                color: var(--primary-color);
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
+            /* ดึงชื่อหัวข้อจาก attribute data-label มาแสดงแทน */
+            td::before {
+                content: attr(data-label);
+                font-weight: 500;
+                color: var(--text-muted);
+                text-align: left;
+                font-size: 0.85rem;
+            }
+            td:first-child::before { content: "วันที่"; color: var(--primary-color); }
+
+            input[type="text"], input[type="number"] {
+                width: 65%;
+                padding: 6px;
+            }
+        }
+
+        .text-green { color: var(--green); font-weight: 600; }
+        .text-red { color: var(--red); font-weight: 600; }
+        .text-blue { color: var(--blue); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <h2>ไทยช่วยไทย พลัส 60/40</h2>
+        <p class="subtitle">บันทึกสิทธิโครงการรัฐ (1 มิ.ย. – 30 ก.ย. 2569)</p>
+    </div>
+
+    <!-- แดชบอร์ดสรุปยอดด้านบน เปิดมาเห็นทันที -->
+    <div class="dashboard">
+        <div class="card" style="border-top: 4px solid var(--blue);">
+            <div class="card-title">ยอดซื้อรวมทั้งหมด</div>
+            <div id="sumTotal" class="card-value text-blue">0.00</div>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--green);">
+            <div class="card-title">รัฐช่วยจ่ายแล้ว</div>
+            <div id="sumGov" class="card-value text-green">0.00</div>
+        </div>
+        <div class="card" style="border-top: 4px solid var(--red);">
+            <div class="card-title">คุณจ่ายเองรวม</div>
+            <div id="sumUser" class="card-value text-red">0.00</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <select id="monthSelect" onchange="loadTable()">
+            <option value="6">มิถุนายน 2569</option>
+            <option value="7">กรกฎาคม 2569</option>
+            <option value="8">สิงหาคม 2569</option>
+            <option value="9">กันยายน 2569</option>
+        </select>
+        <button class="btn-clear" onclick="clearData()">ล้างข้อมูล</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th width="8%">วันที่</th>
+                <th width="32%">รายละเอียดรายการ</th>
+                <th width="15%">ยอดซื้อ (บาท)</th>
+                <th width="15%">รัฐช่วย (60%)</th>
+                <th width="15%">คุณจ่าย (40%)</th>
+                <th width="15%">สิทธิรัฐคงเหลือ</th>
+            </tr>
+        </thead>
+        <tbody id="trackerBody">
+            <!-- ข้อมูลจะถูกสร้างผ่าน JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function getDaysInMonth(month) {
+        return (month == 6 || month == 9) ? 30 : 31;
+    }
+
+    function loadTable() {
+        const month = document.getElementById("monthSelect").value;
+        const days = getDaysInMonth(month);
+        const tbody = document.getElementById("trackerBody");
+        tbody.innerHTML = "";
+        
+        const savedData = JSON.parse(localStorage.getItem(`thaiPlus_v2_m_${month}`)) || {};
+
+        for (let i = 1; i <= days; i++) {
+            const data = savedData[i] || { desc: '', amount: '' };
+            const tr = document.createElement("tr");
+            
+            // ใช้ data-label เพื่อนำไปทำ responsive card ในหน้าจอมือถือ
+            tr.innerHTML = `
+                <td>${i}</td>
+                <td data-label="รายการ"><input type="text" id="desc_${i}" value="${data.desc}" placeholder="ซื้ออะไรวันนี้..." oninput="saveAndCalculate()"></td>
+                <td data-label="ยอดซื้อ (บาท)"><input type="number" id="purchase_${i}" value="${data.amount}" min="0" placeholder="0" oninput="saveAndCalculate()"></td>
+                <td data-label="รัฐช่วย (60%)" id="govPays_${i}" class="text-green">0.00</td>
+                <td data-label="คุณจ่ายเอง" id="userPays_${i}" class="text-red">0.00</td>
+                <td data-label="สิทธิรัฐคงเหลือ" id="remaining_${i}">1,000.00</td>
+            `;
+            tbody.appendChild(tr);
+        }
+        calculate();
+    }
+
+    function saveAndCalculate() {
+        const month = document.getElementById("monthSelect").value;
+        const days = getDaysInMonth(month);
+        const monthData = {};
+
+        for (let i = 1; i <= days; i++) {
+            const descVal = document.getElementById(`desc_${i}`).value;
+            const amountVal = document.getElementById(`purchase_${i}`).value;
+            if (descVal || amountVal) {
+                monthData[i] = { desc: descVal, amount: amountVal };
+            }
+        }
+        localStorage.setItem(`thaiPlus_v2_m_${month}`, JSON.stringify(monthData));
+        calculate();
+    }
+
+    function calculate() {
+        let remainingBudget = 1000;
+        let sumTotal = 0; let sumGov = 0; let sumUser = 0;
+        const month = document.getElementById("monthSelect").value;
+        const days = getDaysInMonth(month);
+
+        for (let i = 1; i <= days; i++) {
+            const inputVal = parseFloat(document.getElementById(`purchase_${i}`).value) || 0;
+            
+            let govPays = inputVal * 0.6;
+            if (govPays > 200) govPays = 200;
+
+            if (remainingBudget - govPays < 0) {
+                govPays = remainingBudget;
+            }
+
+            let userPays = inputVal - govPays;
+            if(inputVal === 0) userPays = 0;
+
+            remainingBudget -= govPays;
+
+            document.getElementById(`govPays_${i}`).innerText = govPays.toFixed(2);
+            document.getElementById(`userPays_${i}`).innerText = userPays.toFixed(2);
+            document.getElementById(`remaining_${i}`).innerText = remainingBudget.toFixed(2);
+
+            sumTotal += inputVal;
+            sumGov += govPays;
+            sumUser += userPays;
+        }
+
+        const fmt = (num) => num.toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById("sumTotal").innerText = fmt(sumTotal);
+        document.getElementById("sumGov").innerText = fmt(sumGov);
+        document.getElementById("sumUser").innerText = fmt(sumUser);
+    }
+
+    function clearData() {
+        if(confirm("คุณต้องการล้างข้อมูลทั้งหมดของเดือนนี้ใช่ไหม?")) {
+            const month = document.getElementById("monthSelect").value;
+            localStorage.removeItem(`thaiPlus_v2_m_${month}`);
+            loadTable();
+        }
+    }
+
+    window.onload = loadTable;
+</script>
+
+</body>
+</html>
